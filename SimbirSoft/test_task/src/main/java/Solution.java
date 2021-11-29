@@ -25,12 +25,11 @@ public class Solution {
 
          //   WebElement enterMail = driver.findElement(By.xpath("//a[@data-statlog=\"notifications.mail.logout.mail\"]"));
           //  enterMail.click();
-            System.out.println("жду поле ввода");
+
             waitToLogin.until(ExpectedConditions.visibilityOfElementLocated(By.id("passp-field-login")));
 //логин
             WebElement inputLogin = driver.findElement(By.id("passp-field-login"));
             inputLogin.sendKeys(user.getLogin());
-            System.out.println("ввел логин");
 
 
             WebElement enter = driver.findElement(By.id("passp:sign-in"));
@@ -42,7 +41,6 @@ public class Solution {
 
             WebElement inputPassword = driver.findElement(By.id("passp-field-passwd"));
             inputPassword.sendKeys(user.getPassword());
-            System.out.println("ввел пароль");
             enter = driver.findElement(By.id("passp:sign-in"));
             enter.click();
 
