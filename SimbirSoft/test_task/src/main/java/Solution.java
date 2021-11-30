@@ -1,83 +1,35 @@
+import org.junit.runner.JUnitCore;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.mailYandex;
+import yandex.LoginPage;
+import yandex.MailPage;
+import yandex.MainPage;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Solution {
-    public static void main(String[] args) {
-        mailYandex site = new mailYandex();
-        User user = new User();
+    static WebDriver driver;
+
+    public static void main(String[] args)  {
         System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
-        try {
-            FirefoxDriver driver = new FirefoxDriver();
-            driver.get(site.getUrl());
-            //задержка
-            WebDriverWait waitToMail = new WebDriverWait(driver,10);
-            WebDriverWait waitToLogin = new WebDriverWait(driver,10);
-            WebDriverWait waitToPassword = new WebDriverWait(driver,10);
-            WebDriverWait waitToWrite = new WebDriverWait(driver,10);
 
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get("https://passport.yandex.ru/auth?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru");
 
-         //   WebElement enterMail = driver.findElement(By.xpath("//a[@data-statlog=\"notifications.mail.logout.mail\"]"));
-          //  enterMail.click();
-            System.out.println("жду поле ввода");
-            waitToLogin.until(ExpectedConditions.visibilityOfElementLocated(By.id("passp-field-login")));
-//логин
-            WebElement inputLogin = driver.findElement(By.id("passp-field-login"));
-            inputLogin.sendKeys(user.getLogin());
-            System.out.println("ввел логин");
+        User user = new User();
+        LoginPage loginPage = new LoginPage(driver);
 
+        MailPage mailPage = loginPage.login(user.getLogin(), user.getPassword());
 
-            WebElement enter = driver.findElement(By.id("passp:sign-in"));
+        List<WebElement> searchThemeCounter = driver.findElements(By.xpath("//span[@title=\"Simbirsoft Тестовое задание\"]"));
 
-            enter.click();
-
-
-            waitToPassword.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id=\"passp-field-passwd\"]")));
-
-            WebElement inputPassword = driver.findElement(By.id("passp-field-passwd"));
-            inputPassword.sendKeys(user.getPassword());
-            System.out.println("ввел пароль");
-            enter = driver.findElement(By.id("passp:sign-in"));
-            enter.click();
-
-            waitToMail.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-key=\"view=footer\"]")));
-//поиск
-            List<WebElement> searchThemeCounter = driver.findElements(By.xpath("//span[@title=\"Simbirsoft Тестовое задание\"]"));
-//написать
-            WebElement writeNew = driver.findElement(By.xpath("//a[@title=\"Написать (w, c)\"]"));
-            writeNew.click();
-            //Thread.sleep(2000);
-            waitToWrite.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role=\"textbox\"]")));
-
-            WebElement writeMessageBody = driver.findElement(By.xpath("//div[@role=\"textbox\"]"));
-            writeMessageBody.click();
-            writeMessageBody.sendKeys("Количество сообщений с темой \"Simbirsoft Тестовое задание\" - "+searchThemeCounter.size());
-            Thread.sleep(200);
-
-            WebElement writeSubject = driver.findElement(By.xpath("//input[@name=\"subject\"]"));
-            writeSubject.click();
-            writeSubject.sendKeys("Simbirsoft Тестовое задание."+" "+"<"+user.getSurname()+">");
-            Thread.sleep(200);
-
-            WebElement writeTo = driver.findElement(By.xpath("//div[@class=\"composeYabbles\"]"));
-            writeTo.click();
-            writeTo.sendKeys(user.getAddress());
-            Thread.sleep(200);
-
-
-//отправить
-            WebElement sendButton = driver.findElement(By.xpath("//button[@class=\"Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l\"]"));
-            sendButton.click();
-        } catch (Exception e) {
-            System.out.println("err");
-            e.printStackTrace();
-        }
-
+        mailPage.sendLetter("Количество сообщений с темой \"Simbirsoft Тестовое задание\" - " + searchThemeCounter.size(), "\"Simbirsoft Тестовое задание.\"" + "<" + user.getSurname() + ">", user.getEmail());
     }
 }
