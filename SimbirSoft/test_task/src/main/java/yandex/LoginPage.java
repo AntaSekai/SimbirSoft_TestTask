@@ -18,11 +18,11 @@ public class LoginPage {
     }
 
     public void fillLogin(String login) {
-        this.driver.findElement(this.loginField).sendKeys(new CharSequence[]{login});
+        this.driver.findElement(this.loginField).sendKeys(login);
     }
 
     public void fillPassword(String password) {
-        this.driver.findElement(this.passwordField).sendKeys(new CharSequence[]{password});
+        this.driver.findElement(this.passwordField).sendKeys(password);
     }
 
     public void clickSighIn() {
