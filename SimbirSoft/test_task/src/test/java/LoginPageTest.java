@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import yandex.LoginPage;
 import yandex.MailPage;
 import java.util.List;
@@ -15,11 +16,13 @@ public class LoginPageTest {
     @Before
     public void setUp() {
         System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
-        driver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("https://passport.yandex.ru/auth?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru");
-     //   LoginPage loginPage = new LoginPage(driver);
+        //   LoginPage loginPage = new LoginPage(driver);
 
     }
 

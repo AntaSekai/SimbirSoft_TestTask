@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import yandex.LoginPage;
 import yandex.MailPage;
@@ -19,6 +20,9 @@ public class MailPageTest {
     @Before
     public void setUp() {
         System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        //  driver = new FirefoxDriver(options);
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -44,9 +48,9 @@ public class MailPageTest {
         List<WebElement> searchThemeCounter = driver.findElements(By.xpath("//span[@title=\"Simbirsoft Тестовое задание\"]"));
         Integer counterBefore = mailPage.getCounter();
         mailPage.sendLetter("Количество сообщений с темой \"Simbirsoft Тестовое задание\" - "+searchThemeCounter.size(),"\"Simbirsoft Тестовое задание.\""+"<"+user.getSurname()+">", user.getEmail());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         mailPage.clickRefresh();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         Integer counterAfter = mailPage.getCounter();
         Assert.assertEquals(1, counterAfter - counterBefore);
     }

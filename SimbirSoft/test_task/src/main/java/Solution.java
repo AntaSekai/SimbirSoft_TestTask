@@ -1,3 +1,4 @@
+import org.junit.runner.JUnitCore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class Solution {
     static WebDriver driver;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
 
         driver = new FirefoxDriver();
