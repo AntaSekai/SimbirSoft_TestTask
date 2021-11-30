@@ -56,7 +56,7 @@ public class MailPageTest {
     }
 
     @After
-    public void close(){
+    public void close() {
         driver.quit();
     }
 }

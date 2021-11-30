@@ -39,28 +39,28 @@ public class MailPage {
         driver.findElement(this.subject).sendKeys(subject);
     }
 
-    public void clickButtonNewLetter(){
+    public void clickButtonNewLetter() {
         driver.findElement(buttonNewLetter).click();
     }
 
-    public void clickButtonSend(){
+    public void clickButtonSend() {
         driver.findElement(buttonSend).click();
     }
 
-    public String getMailOwner(){
+    public String getMailOwner() {
         return driver.findElement(mailOwner).getText();
     }
 
-    public void clickRefresh(){
+    public void clickRefresh() {
         driver.findElement(refresh).click();
     }
 
-    public Integer getCounter(){
+    public Integer getCounter() {
         return Integer.parseInt(driver.findElement(lettersCounter).getText());
     }
 
 
-    public String done(){
+    public String done() {
         return driver.findElement(letterSent).getText();
     }
 
