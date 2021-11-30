@@ -2,7 +2,7 @@
 public class User {
     private final String name="Антон";
     private final String surname="Шаталин";
-    private String address="testMail-java@yandex.ru";
+    private String email ="testMail-java@yandex.ru";
     private String login="testMail-java";
     private String password="qaz123WSX456";
 
@@ -14,8 +14,8 @@ public class User {
         return this.login;
     }
 
-    public String getAddress(){
-        return this.address;
+    public String getEmail(){
+        return this.email;
     }
 
     public String getName(){
