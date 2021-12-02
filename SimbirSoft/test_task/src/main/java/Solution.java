@@ -15,21 +15,37 @@ import java.util.concurrent.TimeUnit;
 public class Solution {
     static WebDriver driver;
 
-    public static void main(String[] args)  {
-        System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
+    public static void main(String[] args)  throws Exception{
+       System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
 
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        driver.get("https://passport.yandex.ru/auth?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru");
+        //driver.get("https://passport.yandex.ru/auth?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru");
 
+        MainPage mainPage = new MainPage(driver);
         User user = new User();
-        LoginPage loginPage = new LoginPage(driver);
+        driver.get(mainPage.getUrl());
+
+        LoginPage loginPage = mainPage.clickMailButton();
+
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+
+
+        WebDriverWait waitToLogin = new WebDriverWait(driver,10);
+        waitToLogin.until(ExpectedConditions.visibilityOfElementLocated(loginPage.header));
 
         MailPage mailPage = loginPage.login(user.getLogin(), user.getPassword());
 
-        List<WebElement> searchThemeCounter = driver.findElements(By.xpath("//span[@title=\"Simbirsoft Тестовое задание\"]"));
+        WebDriverWait waitToMail = new WebDriverWait(driver,10);
+        waitToMail.until(ExpectedConditions.visibilityOfElementLocated(mailPage.mailOwner));
 
-        mailPage.sendLetter("Количество сообщений с темой \"Simbirsoft Тестовое задание\" - " + searchThemeCounter.size(), "\"Simbirsoft Тестовое задание.\"" + "<" + user.getSurname() + ">", user.getEmail());
+
+        mailPage.searchElementsWithSubject("Simbirsoft Тестовое задание");
+        System.out.println(mailPage.searchElementsWithSubject("Simbirsoft Тестовое задание"));
+
+        mailPage.sendLetter("Количество сообщений с темой \"Simbirsoft Тестовое задание\" - " + mailPage.searchElementsWithSubject("Simbirsoft Тестовое задание"), "\"Simbirsoft Тестовое задание.\"" + "<" + user.getSurname() + ">", user.getEmail());
     }
 }

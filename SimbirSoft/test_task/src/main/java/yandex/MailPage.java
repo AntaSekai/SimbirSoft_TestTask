@@ -19,12 +19,14 @@ public class MailPage {
     public By letterSent=By.xpath("//body[@class=\"ComposeDoneScreen-Title\"]");
     public By mailOwner=By.xpath("//a[@data-count='{\"name\":\"user\"}']");
     public By buttonSend = By.xpath("//button[@class=\"Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l\"]");
-    public By elements = By.xpath("//span[@title=\"Simbirsoft Тестовое задание\"]");
+    public By elements ;
     public By refresh = By.xpath("//span[@class=\"mail-ComposeButton-Refresh js-main-action-refresh ns-action\"]");
     public By lettersCounter = By.xpath("//span[@class=\"mail-NestedList-Item-Info-Link-Text\"]");
 
-    public void searchElements(By xpath){
+    public int  searchElementsWithSubject(String subject){
+        elements=By.xpath("//span[@title=\""+subject+"\"]");
         List<WebElement> searchThemeCounter = driver.findElements(elements);
+        return searchThemeCounter.size();
     }
 
     public void fillWriteTo(String toWhom){

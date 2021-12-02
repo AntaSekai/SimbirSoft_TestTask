@@ -22,12 +22,10 @@ public class MailPageTest {
         System.setProperty("webdriver.gecko.driver", "S:\\GIT_REP\\addons\\drivers\\firefox\\geckodriver.exe");
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
-        //  driver = new FirefoxDriver(options);
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("https://passport.yandex.ru/auth?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru");
-        //   LoginPage loginPage = new LoginPage(driver);
     }
 
     @Test

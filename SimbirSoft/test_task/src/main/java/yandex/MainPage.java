@@ -9,7 +9,6 @@ public class MainPage {
     private WebDriver driver;
     private By enterButton = By.xpath("//a[@data-statlog=\"notifications.mail.logout.enter\"]");
     private By mailButton = By.xpath("//a[@data-statlog=\"notifications.mail.logout.mail\"]");
-
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
