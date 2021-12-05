@@ -1,30 +1,35 @@
 package yandex;
 
 import java.util.Objects;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class MainPage {
-    private final String url = "https://yandex.ru";
+    @FindBy (xpath ="//a[@data-statlog=\"notifications.mail.logout.enter\"]")
+    WebElement enterButton;
+    @FindBy (xpath ="//a[contains(@href, \"auth\")]")
+    WebElement mailButton;
+
     private WebDriver driver;
-    private By enterButton = By.xpath("//a[@data-statlog=\"notifications.mail.logout.enter\"]");
-    private By mailButton = By.xpath("//a[@data-statlog=\"notifications.mail.logout.mail\"]");
     public MainPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver,this);
     }
 
     public String getUrl() {
         Objects.requireNonNull(this);
-        return "https://yandex.ru";
+        return "https://mail.yandex.ru";
     }
 
     public LoginPage clickEnterButton() {
-        this.driver.findElement(this.enterButton).click();
+        enterButton.click();
         return new LoginPage(this.driver);
     }
 
     public LoginPage clickMailButton() {
-        this.driver.findElement(this.mailButton).click();
+        mailButton.click();
         return new LoginPage(this.driver);
     }
 }

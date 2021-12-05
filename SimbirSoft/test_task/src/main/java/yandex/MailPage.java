@@ -24,24 +24,20 @@ public class MailPage {
     private WebElement letterSent;
     @FindBy (xpath= "//a[@data-count='{\"name\":\"user\"}']")
     private WebElement mailOwner;
-    @FindBy (xpath= "//button[@class=\"Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l\"]")
+    @FindBy (xpath = "//button[contains(@aria-disabled, \"false\")]")
     private WebElement buttonSend;
     @FindBy (xpath= "//span[@class=\"mail-NestedList-Item-Info-Link-Text\"]")
     private WebElement lettersCounter;
 
 
     public MailPage(WebDriver driver) {
-
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    //public By elements;
-
-    public int searchElementsWithSubject(String subject) {
+    public int searchLettersWithSubject(String subject) {
         By elements = By.xpath("//span[@title=\"" + subject + "\"]");
         List<WebElement> searchThemeCounter = driver.findElements(elements);
-
         return searchThemeCounter.size();
     }
 

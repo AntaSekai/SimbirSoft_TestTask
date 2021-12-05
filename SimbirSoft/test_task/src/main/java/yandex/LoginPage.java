@@ -1,7 +1,6 @@
 
 package yandex;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,46 +24,33 @@ public class LoginPage {
     private WebElement emptyPasswordError;
 
     private WebDriver driver;
-/*
-    public By loginField = By.xpath("//input[@id='passp-field-login']");
-    public By passwordField = By.id("passp-field-passwd");
-    public By buttonSignIn = By.id("passp:sign-in");
-    public By header = By.xpath("//h1[@class=\"passp-title \"]");
-    public By emptyLoginError = By.xpath("//div[@id=\"field:input-login:hint\"]");
-    public By emptyPasswordError = By.xpath("//div[@id=\"field:input-passwd:hint\"]");
-*/
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }
 
     public void fillLogin(String login) {
-     //   driver.findElement(loginField).sendKeys(login);
        this.loginField.sendKeys(login);
     }
 
     public void fillPassword(String password) {
-       // driver.findElement(passwordField).sendKeys(password);
         this.passwordField.sendKeys(password);
     }
 
     public void clickSighIn() {
-      // driver.findElement(buttonSignIn).click();
          this.buttonSignIn.click();
     }
 
     public String getHeadingText() {
-      //  return driver.findElement((header)).getText();
         return this.header.getText();
     }
 
     public String getEmptyLoginError() {
-     //  return driver.findElement(emptyLoginError).getText();
         return this.emptyLoginError.getText();
     }
 
     public String getEmptyPasswordError() {
-      //  return  driver.findElement(emptyPasswordError).getText();
         return this.emptyPasswordError.getText();
     }
 
